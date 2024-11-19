@@ -9,7 +9,7 @@ import { AlertCircle } from 'lucide-react';
 
 type formDataItems = {
     name: string,
-    firstTurn: "" | "random" | "player1" | "player2",
+    firstTurn: "" | "player1" | "player2",
     timeToTurn: "" | "20" | "40"
 }
 
@@ -86,7 +86,6 @@ export default function GameOptions() {
                             <SelectValue placeholder="Jogador" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="random">Autómatico</SelectItem>
                             <SelectItem value="player1">Eu começo</SelectItem>
                             <SelectItem value="player2">Outro Jogador</SelectItem>
                         </SelectContent>

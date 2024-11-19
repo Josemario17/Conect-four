@@ -2,7 +2,7 @@ import {create} from 'zustand'
 
 type optionsData = {
     name: string,
-    firstTurn: "random" | "player1" | "player2",
+    firstTurn: "player1" | "player2",
     timeToTurn: "20" | "40"
 }
 

@@ -6,7 +6,7 @@ type CelulaProps = {
 
 export default function Celula({ selectedState }: CelulaProps) {
   return (
-    <button
+    <div
       className={`size-10 rounded-full border border-zinc-100 ${
         selectedState.seletion === "player1"
           ? "bg-green-500/80"
@@ -14,6 +14,6 @@ export default function Celula({ selectedState }: CelulaProps) {
           ? "bg-orange-500/80"
           : "bg-transparent"
       }`}
-    />
+    ></div>
   );
 }
