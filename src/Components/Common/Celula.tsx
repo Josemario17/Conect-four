@@ -7,7 +7,7 @@ type CelulaProps = {
 export default function Celula({ selectedState }: CelulaProps) {
   return (
     <div
-      className={`size-10 rounded-full border border-zinc-100 ${
+      className={`size-10 mt-2 rounded-full border border-zinc-100 ${
         selectedState.seletion === "player1"
           ? "bg-green-500/80"
           : selectedState.seletion === "player2"
