@@ -8,7 +8,7 @@ export default function CostumRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<SignIn />}></Route>
-                <Route path='/create-account' element={<SignUp />}></Route>
+                <Route path='/create' element={<SignUp />}></Route>
                 <Route path='/Home' element={<HomeGame />}></Route>
             </Routes>
         </BrowserRouter>

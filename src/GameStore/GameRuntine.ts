@@ -9,44 +9,55 @@ type GameState = {
     return matriz.every(linha => linha.every(cell => cell !== "empty"));
   };
 
-  export const useGameRuntineStore = create<GameState>((set) => ({
+  export const useGameRuntineStore = create<GameState>(() => ({
     checkForWin: (matriz: (string | null)[][], player: string): boolean => {
         // Verificar horizontal
-        for (let linha = 0; linha < 6; linha++) {
-          for (let coluna = 0; coluna < 4; coluna++) {
-            if (matriz[linha][coluna] === player && matriz[linha][coluna + 1] === player && matriz[linha][coluna + 2] === player && matriz[linha][coluna + 3] === player) {
-              return true;
-            }
+          for (let linha = 0; linha < 6; linha++) {
+              for (let coluna = 0; coluna < 4; coluna++) {
+                  if (matriz[linha][coluna] === player &&
+                      matriz[linha][coluna + 1] === player &&
+                      matriz[linha][coluna + 2] === player &&
+                      matriz[linha][coluna + 3] === player) {
+                      return true;
+                  }
+              }
           }
-        }
       
-        // Verificar vertical
-        for (let coluna = 0; coluna < 7; coluna++) {
+          // Verificar vertical
+          for (let coluna = 0; coluna < 7; coluna++) {
+              for (let linha = 0; linha < 3; linha++) {
+                  if (matriz[linha][coluna] === player &&
+                      matriz[linha + 1][coluna] === player &&
+                      matriz[linha + 2][coluna] === player &&
+                      matriz[linha + 3][coluna] === player) {
+                      return true;
+                  }
+              }
+          }
+      
+          // Verificar diagonal (diagonal positiva)
           for (let linha = 0; linha < 3; linha++) {
-            if (matriz[linha][coluna] === player && matriz[linha + 1][coluna] === player && matriz[linha + 2][coluna] === player && matriz[linha + 3][coluna] === player) {
-              return true;
-            }
+              for (let coluna = 0; coluna < 4; coluna++) {
+                  if (matriz[linha][coluna] === player &&
+                      matriz[linha + 1][coluna + 1] === player &&
+                      matriz[linha + 2][coluna + 2] === player &&
+                      matriz[linha + 3][coluna + 3] === player) {
+                      return true;
+                  }
+              }
           }
-        }
       
-        // Verificar diagonal (diagonal positiva)
-        for (let linha = 0; linha < 3; linha++) {
-          for (let coluna = 0; coluna < 4; coluna++) {
-            if (matriz[linha][coluna] === player && matriz[linha + 1][coluna + 1] === player && matriz[linha + 2][coluna + 2] === player && matriz[linha + 3][coluna + 3] === player) {
-              return true;
-            }
+          // Verificar diagonal (diagonal negativa)
+          for (let linha = 3; linha < 6; linha++) {
+              for (let coluna = 0; coluna < 4; coluna++) {
+                  if (matriz[linha][coluna] === player &&
+                      matriz[linha - 1][coluna + 1] === player &&
+                      matriz[linha - 2][coluna + 2] === player &&
+                      matriz[linha - 3][coluna + 3] === player) {
+                      return true;
+                  }
+              }
           }
-        }
-      
-        // Verificar diagonal (diagonal negativa)
-        for (let linha = 3; linha < 6; linha++) {
-          for (let coluna = 0; coluna < 4; coluna++) {
-            if (matriz[linha][coluna] === player && matriz[linha - 1][coluna + 1] === player && matriz[linha - 2][coluna + 2] === player && matriz[linha - 3][coluna + 3] === player) {
-              return true;
-            }
-          }
-        }
-      
         return false;
       },
 

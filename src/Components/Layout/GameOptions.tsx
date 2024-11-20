@@ -36,30 +36,15 @@ const ErrorMessage = () => {
 export default function GameOptions() {
     const { addOptions, setStep } = useGameStore();
     const { initialGame } = useGameRunStore()
-    const [formData, setFormData] = useState<formDataItems>({
-        name: "",
-        firstTurn: "",
-    });
+    const [formData, setFormData] = useState<formDataItems>({ name: "", firstTurn: "",});
     const [error, setError] = useState(false);
-
-    const HandleChange = (field: string, value: string) => {
-        setFormData({
-            ...formData,
-            [field]: value
-        });
-    };
-
-    const verification = () => {
-        return formData.name !== "" && formData.firstTurn !== "" ;
-    };
+    const HandleChange = (field: string, value: string) => setFormData({...formData, [field]: value});
+    const verification = () => formData.name !== "" && formData.firstTurn !== "" ? true : false;
 
     const submitOptions = () => {
         if (verification()) {
-            addOptions({
-                name: formData.name,
-                firstTurn: formData.firstTurn === "" ? "player1" : formData.firstTurn,
-            });
-            initialGame()
+            addOptions({name: formData.name});
+            initialGame(formData.firstTurn === "" ? "player1" : formData.firstTurn)
             setStep("game");
         } else {
             setError(true);
@@ -92,12 +77,8 @@ export default function GameOptions() {
                     </Select>
                 </CardContent>
                 <CardFooter className="w-full justify-end gap-4">
-                    <Button variant={"ghost"} size={"lg"}>
-                        Jogar com Alguém
-                    </Button>
-                    <Button onClick={submitOptions} variant={"secondary"} size={"lg"}>
-                        Jogar com um Robô
-                    </Button>
+                    <Button variant={"ghost"} size={"lg"}>Jogar com Alguém</Button>
+                    <Button onClick={submitOptions} variant={"secondary"} size={"lg"}>Jogar com um Robô</Button>
                 </CardFooter>
             </Card>
 
