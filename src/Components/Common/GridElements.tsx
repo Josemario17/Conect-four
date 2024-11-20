@@ -26,7 +26,7 @@ const CellButton = ({ colIndex, emptyRow, slideDisc, children, columnsRef }: pro
     return (
         <div key={colIndex} className="relative">
             <button
-                className="p-2 pb-2 rounded-xl grid items-center justify-center hover:bg-zinc-400/20 duration-150"
+                className="p-0 lg:p-2 pb-0 lg:pb-2 rounded-xl grid items-center justify-center hover:bg-zinc-400/20 duration-150"
                 onClick={() => slideDisc(colIndex, emptyRow)}
             >
                 <div id={`column-${colIndex}`} className="relative" ref={el => el ? columnsRef.current[colIndex] = el : null}>
@@ -97,7 +97,7 @@ const BoardGrid = () => {
 
     return (
         <>
-            <div className="p-6 grid grid-cols-7 gap-4">
+            <div className="p-4 lg:p-6 grid grid-cols-7 gap-2 lg:gap-4">
                 {columns?.map((column, colIndex) => (
                     <ColumnComponent key={colIndex} column={column} colIndex={colIndex} slideDisc={slideDisc} columnsRef={columnsRef} />
                 ))}

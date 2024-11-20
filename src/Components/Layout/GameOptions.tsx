@@ -76,7 +76,7 @@ export default function GameOptions() {
                         </SelectContent>
                     </Select>
                 </CardContent>
-                <CardFooter className="w-full justify-end gap-4">
+                <CardFooter className="w-full grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-4">
                     <Button variant={"ghost"} size={"lg"}>Jogar com Alguém</Button>
                     <Button onClick={submitOptions} variant={"secondary"} size={"lg"}>Jogar com um Robô</Button>
                 </CardFooter>

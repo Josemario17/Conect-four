@@ -57,7 +57,7 @@ const HeaderGame = () => {
                 <CardTitle>Dados do Jogo</CardTitle>
             </CardHeader>
             <CardContent>
-                <Conteiner className="w-full grid grid-cols-4 items-center justify-between">
+                <Conteiner className="w-full grid grid-cols-2 lg:grid-cols-4 md:grid-cols-2 items-center justify-center md:justify-start lg:justify-between">
                     <PlayerInfo name={gameOptions?.name || "Jogador 1"} jogadas={players.player1Jogadas} fallback={gameOptions?.name?.[0] || "J"} player="player1" />
                     <PText className="text-4xl text-center text-zinc-50">{players.player1Wins}</PText>
                     <PText className="text-4xl text-center text-zinc-50">{players.player2Wins}</PText>
@@ -78,7 +78,7 @@ const FooterGame = () => {
             <CardHeader>
                 <CardTitle>Opções do Jogador</CardTitle>
             </CardHeader>
-            <CardContent className="space-x-4 flex items-center">
+            <CardContent className="space-y-4 lg:space-y-0 lg:space-x-4 grid grid-cols-1 lg:grid-cols-2 items-center justify-center">
                 <Button variant="ghost" size="lg" onClick={handleRestart}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="orange" className="size-12">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
