@@ -19,7 +19,6 @@ export const useGameStore = create<StepsStore>((set) => ({
     gameOptions: {
         name: "",
         firstTurn: "player1",
-        timeToTurn: "40"
     },
     setStep: (stepItem : gameSteps) => set({ GameStep: stepItem }),
     addOptions: (options: optionsData) => set({ gameOptions: options })

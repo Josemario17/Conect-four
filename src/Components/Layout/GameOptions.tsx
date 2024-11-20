@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import { useGameStore } from '../../GameStore/StepsStore';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { AlertCircle } from 'lucide-react';
+import { useGameRunStore } from '../../GameStore/GameRunStore';
 
 type formDataItems = {
     name: string,
@@ -34,6 +35,7 @@ const ErrorMessage = () => {
 }
 export default function GameOptions() {
     const { addOptions, setStep } = useGameStore();
+    const { initialGame } = useGameRunStore()
     const [formData, setFormData] = useState<formDataItems>({
         name: "",
         firstTurn: "",
@@ -57,6 +59,7 @@ export default function GameOptions() {
                 name: formData.name,
                 firstTurn: formData.firstTurn === "" ? "player1" : formData.firstTurn,
             });
+            initialGame()
             setStep("game");
         } else {
             setError(true);

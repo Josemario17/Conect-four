@@ -30,6 +30,7 @@ type GameRunProprieties = {
     setWins: (player: PlayerKey) => void;
     setAlertResult: (alertResult: boolean) => void;
     handleButtonClick: (colIndex: number) => void,
+    initialGame: () => void;
     restartGame: ( columns: string[][]) => void;
 };
 
@@ -55,6 +56,15 @@ export const useGameRunStore = create<GameRunProprieties>((set, get) => ({
     setCurrentGame: (currentGame) => set({ currentGame }),
     setWins: (player) => set({ players: { ...get().players, [`${player}Wins`]: get().players[`${player}Wins`] + 1 } }),
     setAlertResult: (alertResult) => set({ currentGame: { ...get().currentGame, alertResult: alertResult } }),
+    initialGame: () => {
+        const { currentGame } = get();
+        set({
+            currentGame: {
+                ...currentGame,
+                playerTurn: currentGame.firstTurn,
+            },
+        });
+    },
 
     handleButtonClick: (colIndex) => {
         const { columns, currentGame, players } = get();
