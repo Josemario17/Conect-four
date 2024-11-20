@@ -10,7 +10,6 @@ import { AlertCircle } from 'lucide-react';
 type formDataItems = {
     name: string,
     firstTurn: "" | "player1" | "player2",
-    timeToTurn: "" | "20" | "40"
 }
 
 type pText = {
@@ -38,7 +37,6 @@ export default function GameOptions() {
     const [formData, setFormData] = useState<formDataItems>({
         name: "",
         firstTurn: "",
-        timeToTurn: ""
     });
     const [error, setError] = useState(false);
 
@@ -50,7 +48,7 @@ export default function GameOptions() {
     };
 
     const verification = () => {
-        return formData.name !== "" && formData.firstTurn !== "" && formData.timeToTurn !== "";
+        return formData.name !== "" && formData.firstTurn !== "" ;
     };
 
     const submitOptions = () => {
@@ -58,7 +56,6 @@ export default function GameOptions() {
             addOptions({
                 name: formData.name,
                 firstTurn: formData.firstTurn === "" ? "player1" : formData.firstTurn,
-                timeToTurn: formData.timeToTurn === "" ? "40" : formData.timeToTurn
             });
             setStep("game");
         } else {
@@ -88,16 +85,6 @@ export default function GameOptions() {
                         <SelectContent>
                             <SelectItem value="player1">Eu começo</SelectItem>
                             <SelectItem value="player2">Outro Jogador</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <PText className="text-white">Tempo por cada Turno</PText>
-                    <Select onValueChange={(value) => HandleChange("timeToTurn", value)}>
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Segundos" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="20">20 Segundos</SelectItem>
-                            <SelectItem value="40">40 Segundos</SelectItem>
                         </SelectContent>
                     </Select>
                 </CardContent>

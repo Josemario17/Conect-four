@@ -15,6 +15,7 @@ type GameRunPlayers = {
 type GameRunCurrentGame = {
     firstTurn: PlayerKey;
     playerTurn: PlayerKey;
+    AllMoves: number,
     Result: PlayerKey | "draw";
     SessionGameNumber: number;
 };
@@ -25,6 +26,7 @@ type GameRunProprieties = {
     columns: string[][];
     setPlayers: (players: GameRunPlayers) => void;
     setCurrentGame: (currentGame: GameRunCurrentGame) => void;
+    setWins: (player: PlayerKey) => void;
     handleButtonClick: (colIndex: number) => void,
     restartGame: ( columns: string[][]) => void;
 };
@@ -42,11 +44,13 @@ export const useGameRunStore = create<GameRunProprieties>((set, get) => ({
         firstTurn: useGameStore.getState().gameOptions.firstTurn,
         playerTurn: useGameStore.getState().gameOptions.firstTurn,
         Result: "draw",
+        AllMoves: 0,
         SessionGameNumber: 0,
     },
     columns: Array.from({ length: 7 }, () => Array(6).fill("empty")),
     setPlayers: (players) => set({ players }),
     setCurrentGame: (currentGame) => set({ currentGame }),
+    setWins: (player) => set({ players: { ...get().players, [`${player}Wins`]: get().players[`${player}Wins`] + 1 } }),
 
     handleButtonClick: (colIndex) => {
         const { columns, currentGame, players } = get();
@@ -65,6 +69,7 @@ export const useGameRunStore = create<GameRunProprieties>((set, get) => ({
             players: updatedPlayers,
             currentGame: {
                 ...currentGame,
+                AllMoves:  players.player1Jogadas + players.player2Jogadas,
                 playerTurn: currentGame.playerTurn === "player1" ? "player2" : "player1",
             },
         });

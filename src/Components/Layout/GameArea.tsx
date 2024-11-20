@@ -7,18 +7,17 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { PText } from "./GameOptions";
+import { useGameRuntineStore } from "../../GameStore/GameRuntine";
 
-const PlayerInfo = ({ name, jogadas, wins, avatarSrc, fallback }: {
+const PlayerInfo = ({ name, jogadas, fallback }: {
     name: string;
     jogadas: number;
-    wins: number;
-    avatarSrc?: string;
     fallback: string;
 }) => (
     <>
         <Conteiner className="flex w-full gap-2 items-center justify-start">
             <Avatar>
-                {avatarSrc ? <AvatarImage src={avatarSrc} /> : <AvatarFallback>{fallback}</AvatarFallback>}
+                <AvatarFallback>{fallback}</AvatarFallback>
             </Avatar>
             <Conteiner className="w-auto">
                 <PText>{name}</PText>
@@ -42,16 +41,13 @@ const HeaderGame = () => {
                     <PlayerInfo
                         name={gameOptions?.name || "Jogador 1"}
                         jogadas={players.player1Jogadas}
-                        wins={players.player1Wins}
                         fallback={gameOptions?.name?.[0] || "J"}
                     />
                     <PText className="text-4xl text-center text-zinc-50">{players?.player1Wins}</PText>
-                    <PText className="text-4xl text-center text-zinc-50">{players?.player1Wins}</PText>
+                    <PText className="text-4xl text-center text-zinc-50">{players?.player2Wins}</PText>
                     <PlayerInfo
                         name="Jogador 2"
                         jogadas={players.player2Jogadas}
-                        wins={players.player2Wins}
-                        avatarSrc="https://github.com/shadcn.png"
                         fallback="RD"
                     />
                 </Conteiner>
@@ -64,11 +60,7 @@ const FooterGame = () => {
     const { restartGame, columns } = useGameRunStore();
     const handleRestart = () => {
         restartGame(columns)
-    };
-
-    const handleEndGame = () => {
-        console.log("Terminar Jogo");
-    };
+    }
 
     return (
         <Card>
@@ -82,22 +74,31 @@ const FooterGame = () => {
                     </svg>
                     Reiniciar
                 </Button>
-                <Button variant="ghost" size="lg" onClick={handleEndGame}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="red" className="size-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
-                    </svg>
-                    Terminar o Jogo
-                </Button>
             </CardContent>
         </Card>
     );
 };
 
 const GridElements = () => {
-    const { columns, handleButtonClick } = useGameRunStore();
+    const { columns, handleButtonClick, currentGame, restartGame, setWins} = useGameRunStore();
+    const { checkDraw, checkForWin } = useGameRuntineStore()
 
     useEffect(() => {
-        console.log(columns);
+        if (currentGame.AllMoves < 7) return;
+        else{
+            if (checkForWin(columns, "player1")) {
+                restartGame(columns)
+                setWins("player1")
+                alert("Player 1 ganhou")
+            } else if (checkForWin(columns, "player2")) {
+                restartGame(columns)
+                setWins("player2")
+                alert("Player 2 ganhou")
+            } else if (checkDraw(columns)) {
+                restartGame(columns)
+                alert("Empate")
+            }
+        }
     }, [columns]);
 
     return (

@@ -3,7 +3,6 @@ import {create} from 'zustand'
 type optionsData = {
     name: string,
     firstTurn: "player1" | "player2",
-    timeToTurn: "20" | "40"
 }
 
 type gameSteps = "gameOptions" | "game" | "gameOver"
