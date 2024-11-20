@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGameRunStore } from "../../GameStore/GameRunStore";
 import { useGameStore } from "../../GameStore/StepsStore";
 import Celula from "../Common/Celula";
@@ -8,6 +8,32 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { PText } from "./GameOptions";
 import { useGameRuntineStore } from "../../GameStore/GameRuntine";
+import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
+
+
+
+
+const ResultMessage = ({ type, text}: { type: "win" | "draw", text: string[]}) => {
+    const { setAlertResult, currentGame } = useGameRunStore()
+
+    return (
+        <AlertDialog open={currentGame.alertResult}>
+            <AlertDialogContent className={type === "win" ? "border-green-600" : "border-zinc-500"}>
+                <AlertDialogHeader>
+                    <AlertDialogTitle className={type === "win" ? "text-green-600" : "text-zinc-500"}>{text[0]}</AlertDialogTitle>
+                    <AlertDialogDescription className="text-white">
+                        {text[1]}
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogAction onClick={e => setAlertResult(false)} className={type === "win" ? "bg-green-600" : "bg-zinc-500"}>
+                        Novo Jogo
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    );
+};
 
 const PlayerInfo = ({ name, jogadas, fallback }: {
     name: string;
@@ -80,46 +106,64 @@ const FooterGame = () => {
 };
 
 const GridElements = () => {
-    const { columns, handleButtonClick, currentGame, restartGame, setWins} = useGameRunStore();
+    const { columns, handleButtonClick, currentGame, restartGame, setWins, setAlertResult } = useGameRunStore();
     const { checkDraw, checkForWin } = useGameRuntineStore()
+    const [result, setResult] = useState({
+        alert: false,
+        type: "win" as "draw" | "win",
+        text: ["", ""]
+    });
 
     useEffect(() => {
         if (currentGame.AllMoves < 7) return;
-        else{
-            if (checkForWin(columns, "player1")) {
-                restartGame(columns)
-                setWins("player1")
-                alert("Player 1 ganhou")
-            } else if (checkForWin(columns, "player2")) {
-                restartGame(columns)
-                setWins("player2")
-                alert("Player 2 ganhou")
-            } else if (checkDraw(columns)) {
-                restartGame(columns)
-                alert("Empate")
+
+        else if (currentGame.AllMoves > 40) {
+            if (checkDraw(columns)) {
+                setResult({ alert: true, type: "draw", text: ["Owww", "houve um empate, vamos novamente?"] })
+                setAlertResult(true)
+                setTimeout(() => { restartGame(columns) }, 3000)
             }
         }
+        else {
+            if (checkForWin(columns, "player1")) {
+                setWins("player1")
+                setResult({ alert: true, type: "win", text: ["Parabéns", "Player 1 você ganhou, vamos novamente?"] })
+                setAlertResult(true)
+                setTimeout(() => { restartGame(columns) }, 3000)
+            } else if (checkForWin(columns, "player2")) {
+                setWins("player2")
+                setResult({ alert: true, type: "win", text: ["Parabéns", "Player2 você ganhou, vamos novamente?"] })
+                setAlertResult(true)
+                setTimeout(() => { restartGame(columns) }, 3000)
+            }
+        }
+
     }, [columns]);
 
     return (
-        <Card>
-            <div className="p-6 grid grid-cols-7 gap-4">
-                {columns?.map((column, colIndex) => (
-                    <button
-                        key={colIndex}
-                        className="p-2 py-3 space-y-4 rounded-xl grid items-center justify-center hover:bg-zinc-400/20 duration-150"
-                        onClick={() => handleButtonClick(colIndex)}
-                    >
-                        {column.map((state, lineIndex) => (
-                            <Celula
-                                key={`${colIndex}-${lineIndex}`}
-                                selectedState={{ seletion: state === "player1" || state === "player2" ? state : "empty" }}
-                            />
-                        ))}
-                    </button>
-                ))}
-            </div>
-        </Card>
+        <>
+
+            <Card>
+                <div className="p-6 grid grid-cols-7 gap-4">
+                    {columns?.map((column, colIndex) => (
+                        <button
+                            key={colIndex}
+                            className="p-2 py-3 space-y-4 rounded-xl grid items-center justify-center hover:bg-zinc-400/20 duration-150"
+                            onClick={() => handleButtonClick(colIndex)}
+                        >
+                            {column.map((state, lineIndex) => (
+                                <Celula
+                                    key={`${colIndex}-${lineIndex}`}
+                                    selectedState={{ seletion: state === "player1" || state === "player2" ? state : "empty" }}
+                                />
+                            ))}
+                        </button>
+                    ))}
+                </div>
+            </Card>
+
+            {currentGame.alertResult && <ResultMessage type={result.type} text={result.text} />}
+        </>
     );
 };
 

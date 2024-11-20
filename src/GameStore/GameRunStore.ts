@@ -18,6 +18,7 @@ type GameRunCurrentGame = {
     AllMoves: number,
     Result: PlayerKey | "draw";
     SessionGameNumber: number;
+    alertResult: boolean,
 };
 
 type GameRunProprieties = {
@@ -27,6 +28,7 @@ type GameRunProprieties = {
     setPlayers: (players: GameRunPlayers) => void;
     setCurrentGame: (currentGame: GameRunCurrentGame) => void;
     setWins: (player: PlayerKey) => void;
+    setAlertResult: (alertResult: boolean) => void;
     handleButtonClick: (colIndex: number) => void,
     restartGame: ( columns: string[][]) => void;
 };
@@ -46,11 +48,13 @@ export const useGameRunStore = create<GameRunProprieties>((set, get) => ({
         Result: "draw",
         AllMoves: 0,
         SessionGameNumber: 0,
+        alertResult: false,
     },
     columns: Array.from({ length: 7 }, () => Array(6).fill("empty")),
     setPlayers: (players) => set({ players }),
     setCurrentGame: (currentGame) => set({ currentGame }),
     setWins: (player) => set({ players: { ...get().players, [`${player}Wins`]: get().players[`${player}Wins`] + 1 } }),
+    setAlertResult: (alertResult) => set({ currentGame: { ...get().currentGame, alertResult: alertResult } }),
 
     handleButtonClick: (colIndex) => {
         const { columns, currentGame, players } = get();
