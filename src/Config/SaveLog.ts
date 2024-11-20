@@ -6,6 +6,7 @@ type logData = {
     DataHora: string,
     jogadas: string[][],
     resultado?: string,
+    nome?: string,
 }
 
 function getSessionId(): string {

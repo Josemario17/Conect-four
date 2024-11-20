@@ -1,8 +1,7 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from "@/lib/utils"
-
+import { cn } from "../../lib/utils"
 const alertVariants = cva(
   "absolute top-12 scrollIntoViwe animate-jump animate-thrice bg-[#1A1831]/70 right-12 max-w-[350px] rounded-lg border border-zinc-200 p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-zinc-950 dark:border-zinc-800 dark:[&>svg]:text-zinc-50",
   {

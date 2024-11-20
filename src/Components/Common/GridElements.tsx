@@ -18,6 +18,7 @@ type logData = {
     DataHora: string,
     jogadas: string[][],
     resultado: string,
+    nome?: string
 }
 
 
@@ -52,7 +53,7 @@ const ColumnComponent = ({ column, colIndex, slideDisc, columnsRef }: propsCostu
 
 
 const BoardGrid = () => {
-    const { columns, handleButtonClick, currentGame, restartGame, setWins, setAlertResult } = useGameRunStore();
+    const { columns, handleButtonClick, currentGame, restartGame, setWins, setAlertResult, players } = useGameRunStore();
     const { checkDraw, checkForWin } = useGameRuntineStore();
     const [result, setResult] = useState({ alert: false, type: "win" as "draw" | "win", text: ["", ""] });
     const columnsRef = useRef<HTMLDivElement[]>([]);
@@ -81,7 +82,7 @@ const BoardGrid = () => {
             if (winner) setWins(winner);
             setResult({ alert: true, type, text });
             setAlertResult(true);
-            saveLog({ DataHora: new Date().toLocaleString(), jogadas: columns, resultado: winner || "draw" });
+            saveLog({ DataHora: new Date().toLocaleString(), jogadas: columns, resultado: winner || "draw", nome: players.player1 });
             setTimeout(() => restartGame(columns), 3000);
         };
 
