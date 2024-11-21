@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
+import React, { useState } from 'react';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Button } from '../ui/button';
@@ -7,20 +7,23 @@ import { useGameStore } from '../../GameStore/StepsStore';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { useGameRunStore } from '../../GameStore/GameRunStore';
+import { getSessionId } from '../../Config/SaveLog';
+import { TokenClipBoardModal } from '../Common/TokenClipBoardModal';
 
 type formDataItems = {
     name: string,
     firstTurn: "" | "player1" | "player2",
-}
+};
 
 type pText = {
     children: React.ReactNode;
     className?: string;
-}
+};
 
 const PText = ({ children, className }: pText) => {
-    return <p className={className}>{children}</p>
-}
+    return <p className={className}>{children}</p>;
+};
+
 
 const ErrorMessage = () => {
     return (
@@ -31,21 +34,30 @@ const ErrorMessage = () => {
                 Configure todas as opções para começar.
             </AlertDescription>
         </Alert>
-    )
-}
+    );
+};
+
+
 export default function GameOptions() {
-    const { addOptions, setStep } = useGameStore();
-    const { initialGame } = useGameRunStore()
-    const [formData, setFormData] = useState<formDataItems>({ name: "", firstTurn: "",});
+    const { addOptions, setStep, ModalTokenClipBoard, openModalTokenClipBoard } = useGameStore();
+    const { initialGame } = useGameRunStore();
+    const [formData, setFormData] = useState<formDataItems>({ name: "", firstTurn: "" });
+    const [links, setLinks] = useState<{ urlGoto: string, urlToCopy: string }>({ urlGoto: "", urlToCopy: "" });
     const [error, setError] = useState(false);
-    const HandleChange = (field: string, value: string) => setFormData({...formData, [field]: value});
+
+    const HandleChange = (field: string, value: string) => setFormData({ ...formData, [field]: value });
     const verification = () => formData.name !== "" && formData.firstTurn !== "" ? true : false;
 
-    const submitOptions = () => {
+    const submitOptions = async (isRobot: boolean) => {
         if (verification()) {
-            addOptions({name: formData.name});
-            initialGame(formData.firstTurn === "" ? "player1" : formData.firstTurn)
-            setStep("game");
+            addOptions({ name: formData.name });
+            initialGame(formData.firstTurn === "" ? "player1" : formData.firstTurn);
+            if (isRobot) {
+                setStep("game");
+            } else {
+                setLinks({ urlGoto: `/game/${getSessionId()}`, urlToCopy: `/game/${getSessionId()}-player2`});
+                openModalTokenClipBoard();
+            }
         } else {
             setError(true);
             setTimeout(() => setError(false), 3000);
@@ -77,15 +89,15 @@ export default function GameOptions() {
                     </Select>
                 </CardContent>
                 <CardFooter className="w-full grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-4">
-                    <Button variant={"ghost"} size={"lg"}>Jogar com Alguém</Button>
-                    <Button onClick={submitOptions} variant={"secondary"} size={"lg"}>Jogar com um Robô</Button>
+                    <Button variant={"ghost"} size={"lg"} onClick={e => submitOptions(false)}>Jogar com Alguém</Button>
+                    <Button onClick={e => submitOptions(true)} variant={"secondary"} size={"lg"}>Jogar com um Robô</Button>
                 </CardFooter>
             </Card>
 
             {error && <ErrorMessage />}
+            {ModalTokenClipBoard && <TokenClipBoardModal urlGoto={links.urlGoto} urlToCopy={links.urlToCopy} />}
         </>
     );
 }
 
-
-export { PText }
+export { PText };

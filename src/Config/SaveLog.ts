@@ -26,4 +26,4 @@ function saveLog(logData: logData) {
     set(logRef, logData);
 }
 
-export { saveLog }
+export { saveLog, getSessionId }
