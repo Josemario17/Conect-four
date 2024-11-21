@@ -14,7 +14,7 @@ export default function GameRoom() {
                 <Title>
                     Conect Four -{" "}<div className="max-w-64 truncate">Room: {room}...</div>
                 </Title>
-                <Conteiner className=" max-w-[1080px] grid grid-cols-3 mt-6 justify-center mx-auto">
+                <Conteiner className=" max-w-[1080px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-6 justify-center mx-auto">
                     <GameRomArea />
                     <GameChatMultiplePlayer />
                 </Conteiner>

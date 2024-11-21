@@ -66,7 +66,7 @@ export default function GameChatMultiplePlayer({ className, ...props }: CardProp
     };
 
     return (
-        <card.Card className={cn("w-[380px] bg-[#1A1831]/70 grid grid-cols-1", className)} {...props}>
+        <card.Card className={cn("w-auto mt-3 lg:mt-0 lg:w-[380px] bg-[#1A1831]/70 grid grid-cols-1", className)} {...props}>
             <card.CardHeader>
                 <card.CardTitle>Mensagens</card.CardTitle>
                 <card.CardDescription>Seus Últimos jogos</card.CardDescription>
