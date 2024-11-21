@@ -89,8 +89,8 @@ export default function GameOptions() {
                     </Select>
                 </CardContent>
                 <CardFooter className="w-full grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-4">
-                    <Button variant={"ghost"} size={"lg"} onClick={e => submitOptions(false)}>Jogar com Alguém</Button>
-                    <Button onClick={e => submitOptions(true)} variant={"secondary"} size={"lg"}>Jogar com um Robô</Button>
+                    <Button variant={"ghost"} size={"lg"} onClick={() => submitOptions(false)}>Jogar com Alguém</Button>
+                    <Button onClick={() => submitOptions(true)} variant={"secondary"} size={"lg"}>Jogar com um Robô</Button>
                 </CardFooter>
             </Card>
 

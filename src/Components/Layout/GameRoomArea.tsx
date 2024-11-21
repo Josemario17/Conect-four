@@ -12,7 +12,7 @@ export default function GameRomArea() {
             <HeaderGame />
             <GridElements />
             <FooterGame>
-                <Button variant="ghost" size="lg" onClick={e => Navigate("/home")}>
+                <Button variant="ghost" size="lg" onClick={() => Navigate("/home")}>
                     <Minimize2 />
                     Terminar Jogo
                 </Button>

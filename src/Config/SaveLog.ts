@@ -1,4 +1,4 @@
-import { push, ref, set, update } from "firebase/database";
+import { push, ref, set } from "firebase/database";
 import { v4 as uuidv4 } from 'uuid';
 import { database } from "./firebase";
 

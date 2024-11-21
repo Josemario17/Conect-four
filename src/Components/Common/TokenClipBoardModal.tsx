@@ -1,4 +1,4 @@
-import { ArrowUpRight, Dice6, Link, Plus, X } from "lucide-react";
+import { ArrowUpRight, Link} from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/button";
 import * as card from "../ui/card";
@@ -31,7 +31,7 @@ export function TokenClipBoardModal({ urlGoto, urlToCopy }: { urlGoto: string, u
                     </Conteiner>
                 </card.CardContent>
                 <card.CardFooter>
-                    <Button onClick={e => {Navigate(urlGoto); closeModalTokenClipBoard()}} variant={"secondary"} className="w-full mr-2">
+                    <Button onClick={() => {Navigate(urlGoto); closeModalTokenClipBoard()}} variant={"secondary"} className="w-full mr-2">
                         <ArrowUpRight />Ir para Multipartida
                     </Button>
                 </card.CardFooter>

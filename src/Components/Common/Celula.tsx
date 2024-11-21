@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 type CelulaProps = {
   selectedState: { seletion: "empty" | "player1" | "player2" };

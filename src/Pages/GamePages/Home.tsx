@@ -1,4 +1,4 @@
-import React from "react";
+
 import Conteiner from "../../Components/Common/Conteiner";
 import Title from "../../Components/Common/Title";
 import GameOptions from "../../Components/Layout/GameOptions";

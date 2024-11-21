@@ -14,14 +14,6 @@ type propsCostum = {
     children?: React.ReactNode;
 }
 
-type logData = {
-    DataHora: string,
-    jogadas: string[][],
-    resultado: string,
-    nome?: string
-}
-
-
 const CellButton = ({ colIndex, emptyRow, slideDisc, children, columnsRef }: propsCostum) => {
     return (
         <div key={colIndex} className="relative">

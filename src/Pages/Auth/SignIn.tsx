@@ -1,6 +1,5 @@
 import Conteiner from "../../Components/Common/Conteiner";
 import Title from "../../Components/Common/Title";
-import GameOptions from "../../Components/Layout/GameOptions";
 import { SignInForm } from "../../Components/Layout/SignInForm";
 import { Card } from "../../Components/ui/card";
 
