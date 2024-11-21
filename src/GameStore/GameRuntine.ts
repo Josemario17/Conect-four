@@ -11,7 +11,7 @@ type GameState = {
 
   export const useGameRuntineStore = create<GameState>(() => ({
     checkForWin: (matriz: (string | null)[][], player: string): boolean => {
-        // Verificar horizontal
+        // horizontal
           for (let linha = 0; linha < 6; linha++) {
               for (let coluna = 0; coluna < 4; coluna++) {
                   if (matriz[linha][coluna] === player &&
@@ -23,7 +23,7 @@ type GameState = {
               }
           }
       
-          // Verificar vertical
+          // vertical
           for (let coluna = 0; coluna < 7; coluna++) {
               for (let linha = 0; linha < 3; linha++) {
                   if (matriz[linha][coluna] === player &&
@@ -35,7 +35,7 @@ type GameState = {
               }
           }
       
-          // Verificar diagonal (diagonal positiva)
+          // diagonal (diagonal positiva)
           for (let linha = 0; linha < 3; linha++) {
               for (let coluna = 0; coluna < 4; coluna++) {
                   if (matriz[linha][coluna] === player &&
@@ -47,7 +47,7 @@ type GameState = {
               }
           }
       
-          // Verificar diagonal (diagonal negativa)
+          // diagonal (diagonal negativa)
           for (let linha = 3; linha < 6; linha++) {
               for (let coluna = 0; coluna < 4; coluna++) {
                   if (matriz[linha][coluna] === player &&
